@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/welcome_screen.dart';
-import 'screens/expert_dashboard_screen_new.dart';
+import 'screens/expert_dashboard_screen.dart';
 import 'screens/experts_screen.dart';
 import 'screens/my_sessions_screen.dart';
 import 'screens/chat_list_screen.dart';
@@ -13,8 +13,16 @@ import 'screens/referral_screen.dart';
 import 'screens/review_submission_screen.dart';
 import 'utils/app_styles.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   
   // Set preferred orientations and system UI overlay style
   SystemChrome.setPreferredOrientations([

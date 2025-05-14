@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/expert.dart';
 import '../utils/app_styles.dart';
 import '../utils/auth_utils.dart';
-import '../utils/dummy_data.dart';
+import '../services/expert_service.dart';
 import '../widgets/pending_reviews_widget.dart';
 import 'expert_profile_screen.dart';
 import 'session_booking_screen.dart';
@@ -16,7 +16,7 @@ class ExpertsScreen extends StatefulWidget {
 }
 
 class _ExpertsScreenState extends State<ExpertsScreen> {
-  late List<Expert> experts;
+  List<Expert> experts = [];
   String _selectedCategory = 'All';
   bool isLoggedIn = false;
   bool _isExpert = false;
@@ -25,8 +25,7 @@ class _ExpertsScreenState extends State<ExpertsScreen> {
   @override
   void initState() {
     super.initState();
-    experts = DummyData.getExperts();
-    _loadAuthState();
+    _loadData();
   }
 
   Future<void> _loadAuthState() async {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../utils/app_styles.dart';
 import '../utils/auth_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'experts_screen.dart';
-import 'expert_dashboard_screen_new.dart';
+import 'expert_dashboard_screen.dart';
 
 class UserTypeSelectionScreen extends StatefulWidget {
   const UserTypeSelectionScreen({super.key});
@@ -96,31 +97,38 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
 
               const SizedBox(height: 20),              // Continue Button
               ElevatedButton(
-                onPressed: _selectedUserType != null
-                    ? () {
-                        // Show feedback
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Continuing as $_selectedUserType'),
-                            duration: const Duration(seconds: 2),
-                          ),
-                        );
-                          // Set user type in AuthUtils
-                        AuthUtils().login(
-                          AuthUtils().currentUserEmail ?? 'user@example.com', 
-                          'password',
-                          userType: _selectedUserType!
-                        );
+                onPressed: _selectedUserType != null                    ? () async {
+                        final authUtils = AuthUtils();
+                        try {
+                          // Update user type in Firestore
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(authUtils.currentUser!.uid)
+                              .update({'userType': _selectedUserType});
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Continuing as ${_selectedUserType == 'expert' ? 'Expert' : 'User'}'),
+                              duration: const Duration(seconds: 2),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+
                           // Navigate based on user type
-                        if (_selectedUserType == 'expert') {
-                          // Navigate to Expert Dashboard
-                          Navigator.pushReplacementNamed(context, '/expert-dashboard');
-                        } else if (_selectedUserType == 'apply_expert') {
-                          // Navigate to Become Expert form
-                          Navigator.pushReplacementNamed(context, '/become-expert');
-                        } else {
-                          // Navigate to Experts screen for mentees
-                          Navigator.pushReplacementNamed(context, '/experts');
+                          if (_selectedUserType == 'expert') {
+                            Navigator.pushReplacementNamed(context, '/expert-dashboard');
+                          } else if (_selectedUserType == 'apply_expert') {
+                            Navigator.pushReplacementNamed(context, '/become-expert');
+                          } else {
+                            Navigator.pushReplacementNamed(context, '/experts');
+                          }
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Failed to update user type. Please try again.'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
                         }
                       }
                     : null, // Disabled if no selection

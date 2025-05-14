@@ -1,0 +1,37 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "bd-connectup",
+          "appId": "1:235986873598:android:0b4a6b388b52b1f8b109af",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "bd-connectup",
+          "configurations": {
+            "android": "1:235986873598:android:0b4a6b388b52b1f8b109af",
+            "web": "1:235986873598:web:75e16536e8a6b9a9b109af",
+            "windows": "1:235986873598:web:c5fd89e7ff6dddd1b109af"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

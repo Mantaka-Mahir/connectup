@@ -35,6 +35,12 @@ dependencies:
   cupertino_icons: ^1.0.8
   google_fonts: ^6.1.0
   lottie: ^3.0.0
+  # Add Firebase dependencies
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.17.4
+  cloud_firestore: ^4.15.4
+  firebase_storage: ^11.6.5
+  firebase_messaging: ^14.7.15
 
 dev_dependencies:
   flutter_test:
