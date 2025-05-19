@@ -3,18 +3,18 @@
     "platforms": {
       "android": {
         "default": {
-          "projectId": "bd-connectup",
-          "appId": "1:235986873598:android:0b4a6b388b52b1f8b109af",
+          "projectId": "YOUR_PROJECT_ID",
+          "appId": "YOUR_APP_ID",
           "fileOutput": "android/app/google-services.json"
         }
       },
       "dart": {
         "lib/firebase_options.dart": {
-          "projectId": "bd-connectup",
+          "projectId": "YOUR_PROJECT_ID",
           "configurations": {
-            "android": "1:235986873598:android:0b4a6b388b52b1f8b109af",
-            "web": "1:235986873598:web:75e16536e8a6b9a9b109af",
-            "windows": "1:235986873598:web:c5fd89e7ff6dddd1b109af"
+            "android": "YOUR_ANDROID_APP_ID",
+            "web": "YOUR_WEB_APP_ID",
+            "windows": "YOUR_WINDOWS_APP_ID"
           }
         }
       }
