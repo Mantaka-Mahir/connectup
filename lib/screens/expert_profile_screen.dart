@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/expert.dart';
 import '../utils/app_styles.dart';
 import '../utils/auth_utils.dart';
-import 'auth_screen.dart';
 import 'session_booking_screen.dart';
 
 class ExpertProfileScreen extends StatefulWidget {
@@ -588,9 +587,10 @@ class _ExpertProfileScreenState extends State<ExpertProfileScreen> {
         ],
       ),
       child: SafeArea(
-        child: ElevatedButton(          onPressed: () async {
+        child: ElevatedButton(
+          onPressed: () async {
             if (isLoggedIn) {
-              // If logged in, navigate to booking screen
+              // If logged in, navigate directly to booking screen
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -600,23 +600,23 @@ class _ExpertProfileScreenState extends State<ExpertProfileScreen> {
                 ),
               );
             } else {
-              // If not logged in, navigate to auth screen
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AuthScreen()),
-              );
+              // If not logged in, navigate to auth screen and wait for result
+              final result = await Navigator.pushNamed(context, '/auth');
               
-              // Check if login was successful and update state
-              if (result == true) {
-                _updateLoginStatus();
+              // Check if user is now logged in after returning from auth screen
+              if (mounted) {
+                setState(() {
+                  isLoggedIn = AuthUtils().isLoggedIn;
+                });
                 
-                // Show a message if it's the test account
-                if (AuthUtils().isTestAccount) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Welcome! You\'re logged in with the test account'),
-                      backgroundColor: Colors.green,
-                      duration: Duration(seconds: 2),
+                // If successfully logged in after auth (result == true), navigate to booking
+                if (isLoggedIn && result == true) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SessionBookingScreen(
+                        expert: widget.expert,
+                      ),
                     ),
                   );
                 }

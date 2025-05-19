@@ -140,7 +140,7 @@ class _MessageScreenState extends State<MessageScreen> {
               children: [
                 CircleAvatar(
                   radius: 16,
-                  backgroundColor: AppColors.primary.withOpacity(0.1),
+                  backgroundColor: AppColors.primary.withAlpha(26), // 0.1 * 255 ≈ 26
                   backgroundImage: AssetImage(widget.profileImage),
                 ),
                 if (widget.isOnline)
@@ -288,7 +288,7 @@ class _MessageScreenState extends State<MessageScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           color: message.isSentByMe
-              ? AppColors.primary.withOpacity(0.1)
+              ? AppColors.primary.withAlpha(26) // 0.1 * 255 ≈ 26
               : Colors.white,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
@@ -298,7 +298,7 @@ class _MessageScreenState extends State<MessageScreen> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withAlpha(13), // 0.05 * 255 ≈ 13
               blurRadius: 5,
               offset: const Offset(0, 1),
             ),

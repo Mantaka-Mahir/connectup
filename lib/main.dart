@@ -11,6 +11,7 @@ import 'screens/wallet_screen.dart';
 import 'screens/become_expert_screen.dart';
 import 'screens/referral_screen.dart';
 import 'screens/review_submission_screen.dart';
+import 'screens/edit_profile_screen.dart';
 import 'utils/app_styles.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -71,7 +72,9 @@ class MyApp extends StatelessWidget {
         '/my-sessions': (context) => const MySessionsScreen(),
         '/chats': (context) => const ChatListScreen(),
         '/notifications': (context) => NotificationsScreen(),
-        '/wallet': (context) => const WalletScreen(),        '/become-expert': (context) => const BecomeExpertScreen(),
+        '/wallet': (context) => const WalletScreen(),
+        '/become-expert': (context) => const BecomeExpertScreen(),
+        '/edit-profile': (context) => const EditProfileScreen(),
         '/referral': (context) => const ReferralScreen(),
         '/review': (context) {
           final args = ModalRoute.of(context)?.settings.arguments as Map<String, String>?;

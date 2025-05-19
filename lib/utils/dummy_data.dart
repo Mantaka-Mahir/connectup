@@ -11,9 +11,9 @@ class DummyData {
         category: 'Software Development',
         experienceLevel: 'Senior',
         hourlyRate: 85.0,
-        profilePicture: 'assets/experts/sarah.png', // This will be replaced by a placeholder
+        profilePicture: 'assets/experts/sarah.png',
         rating: 4.9,
-        totalReviews: 123,
+        reviewCount: 123,
         isFeatured: true,
         shortBio: 'Full-stack developer with 10+ years experience in web and mobile app development.',
       ),
@@ -23,9 +23,9 @@ class DummyData {
         category: 'Product Management',
         experienceLevel: 'Expert',
         hourlyRate: 95.0,
-        profilePicture: 'assets/experts/michael.png', // This will be replaced by a placeholder
+        profilePicture: 'assets/experts/michael.png',
         rating: 4.8,
-        totalReviews: 87,
+        reviewCount: 87,
         isFeatured: true,
         shortBio: 'Former Product Manager at Google with expertise in launching successful products.',
       ),
@@ -35,9 +35,9 @@ class DummyData {
         category: 'UX/UI Design',
         experienceLevel: 'Advanced',
         hourlyRate: 75.0,
-        profilePicture: 'assets/experts/priyanka.png', // This will be replaced by a placeholder
+        profilePicture: 'assets/experts/priyanka.png',
         rating: 4.7,
-        totalReviews: 62,
+        reviewCount: 62,
         shortBio: 'Creative designer specializing in user-centered design for digital products.',
       ),
       Expert(
@@ -46,9 +46,9 @@ class DummyData {
         category: 'Business Strategy',
         experienceLevel: 'Expert',
         hourlyRate: 120.0,
-        profilePicture: 'assets/experts/david.png', // This will be replaced by a placeholder
+        profilePicture: 'assets/experts/david.png',
         rating: 4.9,
-        totalReviews: 145,
+        reviewCount: 145,
         isFeatured: true,
         shortBio: 'Business consultant with experience scaling startups from seed to Series B.',
       ),
@@ -58,9 +58,9 @@ class DummyData {
         category: 'Marketing',
         experienceLevel: 'Intermediate',
         hourlyRate: 65.0,
-        profilePicture: 'assets/experts/elena.png', // This will be replaced by a placeholder
+        profilePicture: 'assets/experts/elena.png',
         rating: 4.6,
-        totalReviews: 48,
+        reviewCount: 48,
         shortBio: 'Digital marketing specialist focused on growth hacking and SEO optimization.',
       ),
       Expert(
@@ -69,9 +69,9 @@ class DummyData {
         category: 'Data Science',
         experienceLevel: 'Senior',
         hourlyRate: 90.0,
-        profilePicture: 'assets/experts/jamal.png', // This will be replaced by a placeholder
+        profilePicture: 'assets/experts/jamal.png',
         rating: 4.8,
-        totalReviews: 76,
+        reviewCount: 76,
         shortBio: 'Data scientist with expertise in machine learning and predictive analytics.',
       ),
       Expert(
@@ -80,12 +80,13 @@ class DummyData {
         category: 'Financial Planning',
         experienceLevel: 'Expert',
         hourlyRate: 110.0,
-        profilePicture: 'assets/experts/lisa.png', // This will be replaced by a placeholder
+        profilePicture: 'assets/experts/lisa.png',
         rating: 4.9,
-        totalReviews: 92,
+        reviewCount: 92,
         isFeatured: true,
         shortBio: 'Certified Financial Planner with focus on startup equity and investment strategy.',
-      ),    ];
+      ),
+    ];
   }
 
   static List<Session> getSessions() {

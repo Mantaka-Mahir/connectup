@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/app_styles.dart';
-import '../widgets/review_reminder_overlay.dart';
-import 'user_type_selection_screen.dart';
 import 'auth_screen.dart';
 import 'experts_screen.dart';
 
@@ -17,7 +15,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<double> _slideAnimation;
-  bool _showReviewReminder = false;
 
   @override
   void initState() {
@@ -42,33 +39,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     );
     
     _animationController.forward();
-    
-    // Show review reminder after 2 seconds
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        setState(() {
-          _showReviewReminder = true;
-        });
-      }
-    });
-  }
-
-  void _hideReviewReminder() {
-    setState(() {
-      _showReviewReminder = false;
-    });
-  }
-
-  void _navigateToReviewScreen() {
-    _hideReviewReminder();
-    Navigator.pushNamed(
-      context, 
-      '/review',
-      arguments: {
-        'expertName': 'Your Recent Mentor',
-        'sessionDate': 'Recent session',
-      },
-    );
   }
 
   @override
@@ -76,28 +46,27 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     _animationController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isSmallScreen = size.width < 360;
     
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: AppGradients.primaryGradient,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: AppGradients.primaryGradient,
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isSmallScreen ? 16.0 : 24.0,
             ),
-            child: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: isSmallScreen ? 16.0 : 24.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Spacer(flex: 1),
-                    AnimatedBuilder(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Spacer(flex: 1),
+                AnimatedBuilder(
                   animation: _animationController,
                   builder: (context, child) {
                     return Opacity(
@@ -159,15 +128,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
             ),
           ),
         ),
-      ),
-          
-          // Review Reminder Overlay
-          if (_showReviewReminder)
-            ReviewReminderOverlay(
-              onDismiss: _hideReviewReminder,
-              onReviewPressed: _navigateToReviewScreen,
-            ),
-        ],
       ),
     );
   }

@@ -419,7 +419,7 @@ class _SessionBookingScreenState extends State<SessionBookingScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Patient Details',
+            'User Details',
             style: GoogleFonts.poppins(
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -482,31 +482,12 @@ class _SessionBookingScreenState extends State<SessionBookingScreen> {
           ),
           
           const SizedBox(height: 16),
-          
-          // Gender selection
-          Row(
-            children: [
-              Text(
-                'Gender:',
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  color: AppColors.text,
-                ),
-              ),
-              const SizedBox(width: 16),
-              _buildGenderOption('Male'),
-              const SizedBox(width: 16),
-              _buildGenderOption('Female'),
-              const SizedBox(width: 16),
-              _buildGenderOption('Other'),
-            ],
-          ),
-          
+          // Gender selection section has been removed
           const SizedBox(height: 24),
           
           // Problem description
           Text(
-            'Describe your problem',
+            'Describe your question or problem for the expert',
             style: GoogleFonts.poppins(
               fontSize: 14,
               fontWeight: FontWeight.w500,

@@ -21,20 +21,32 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   bool _obscurePassword = true;
   bool _isLoading = false;
   String? _selectedUserType; // 'user' or 'expert'
+  String _buttonText = 'Login'; // Initialize button text
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    // Add listener for tab changes to update button text
+    _tabController.addListener(_handleTabChange);
   }
 
   @override
   void dispose() {
+    _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void _handleTabChange() {
+    if (_tabController.indexIsChanging) {
+      setState(() {
+        _buttonText = _tabController.index == 0 ? 'Login' : 'Sign Up';
+      });
+    }
   }
 
   @override
@@ -76,8 +88,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                         spreadRadius: 0,
                       ),
                     ],
-                  ),
-                  child: TabBar(
+                  ),                  child: TabBar(
                     controller: _tabController,
                     labelColor: Colors.white,
                     unselectedLabelColor: AppColors.textLight,
@@ -92,9 +103,15 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                       borderRadius: BorderRadius.circular(8),
                       color: AppColors.primary,
                     ),
-                    tabs: const [
-                      Tab(text: 'Login'),
-                      Tab(text: 'Sign Up'),
+                    tabs: [
+                      Container(
+                        width: double.infinity,
+                        child: const Tab(text: 'Login'),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: const Tab(text: 'Sign Up'),
+                      ),
                     ],
                   ),
                 ),
@@ -291,7 +308,6 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
       ],
     );
   }
-
   Widget _buildActionButton({
     required String label,
     required VoidCallback onPressed,
@@ -306,8 +322,9 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
         ),
       ),
       child: Text(
-        label,
+        _buttonText,
         style: GoogleFonts.poppins(
+          color: Colors.white,
           fontSize: 16,
           fontWeight: FontWeight.w600,
         ),
@@ -347,9 +364,8 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
             ),
             const SizedBox(height: 20),
             _buildPasswordField(),
-            const SizedBox(height: 30),
-            _buildActionButton(
-              label: 'Login',
+            const SizedBox(height: 30),            _buildActionButton(
+              label: _buttonText,
               onPressed: _handleLogin,
             ),
           ],
@@ -357,7 +373,6 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
       ),
     );
   }
-
   Widget _buildSignUpForm() {
     return SingleChildScrollView(
       child: Form(
@@ -366,7 +381,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Create Account',
+              'Create New Account',
               style: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -399,9 +414,8 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
             _buildPasswordField(),
             const SizedBox(height: 20),
             _buildUserTypeSelection(),
-            const SizedBox(height: 30),
-            _buildActionButton(
-              label: 'Sign Up',
+            const SizedBox(height: 30),            _buildActionButton(
+              label: _buttonText,
               onPressed: _handleSignUp,
             ),
           ],
@@ -426,22 +440,20 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
 
         setState(() => _isLoading = false);
 
-        if (!mounted) return;
+        if (!mounted) return;          if (result['success']) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Login successful'),
+                backgroundColor: Colors.green,
+              ),
+            );
 
-        if (result['success']) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Login successful'),
-              backgroundColor: Colors.green,
-            ),
-          );
-
-          // Navigate based on user type
-          if (result['userType'] == 'expert') {
-            Navigator.pushReplacementNamed(context, '/expert-dashboard');
-          } else {
-            Navigator.pushReplacementNamed(context, '/experts');
-          }
+            // Navigate based on user type - only use pushReplacementNamed
+            if (result['userType'] == 'expert') {
+              Navigator.pushReplacementNamed(context, '/expert-dashboard');
+            } else {
+              Navigator.pushReplacementNamed(context, '/experts');
+            }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -482,9 +494,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
 
       setState(() => _isLoading = false);
 
-      if (!mounted) return;
-
-      if (error == null) {
+      if (!mounted) return;      if (error == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Account created successfully!'),
@@ -492,7 +502,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
           ),
         );
 
-        // Navigate based on user type
+        // Navigate based on user type - only use pushReplacementNamed
         if (_selectedUserType == 'expert') {
           Navigator.pushReplacementNamed(context, '/expert-dashboard');
         } else {
