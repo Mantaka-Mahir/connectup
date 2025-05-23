@@ -15,18 +15,18 @@ ConnectUp is a modern expert consultation platform built with Flutter and Fireba
   <img src="Screenshots/USER_Flow/3.jpg" alt="Expert List" width="300"/>
   
   <br><br>
-  <img src="Screenshots/USER_Flow/4.jpg" alt="Expert Profile" width="300"/>
+  <img src="Screenshots/USER_Flow/5.jpg" alt="Expert Profile" width="300"/>
   
-  <img src="Screenshots/USER_Flow/5.jpg" alt="Booking Screen" width="300"/>
+  <img src="Screenshots/USER_Flow/4.jpg" alt="Booking Screen" width="300"/>
   
-  <img src="Screenshots/USER_Flow/6.jpg" alt="Chat Screen" width="300"/>
+  <img src="Screenshots/USER_Flow/7.jpg" alt="Chat Screen" width="300"/>
   
   <br><br>
-  <img src="Screenshots/USER_Flow/7.jpg" alt="Session Management" width="300"/>
+  <img src="Screenshots/USER_Flow/8.jpg" alt="Session Management" width="300"/>
   
-  <img src="Screenshots/USER_Flow/8.jpg" alt="Profile Screen" width="300"/>
+  <img src="Screenshots/USER_Flow/9.jpg" alt="Profile Screen" width="300"/>
   
-  <img src="Screenshots/USER_Flow/9.jpg" alt="Settings" width="300"/>
+  <img src="Screenshots/USER_Flow/6.jpg" alt="Settings" width="300"/>
 </div>
 
 ### 👨‍💼 Expert Flow
