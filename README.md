@@ -38,9 +38,9 @@ ConnectUp is a modern expert consultation platform built with Flutter and Fireba
   <br><br>
   <img src="Screenshots/Expert_flow/3.jpg" alt="Session Management" width="300"/>
   
-  <img src="Screenshots/Expert_flow/4.jpg" alt="Expert Profile Management" width="300"/>
+  <img src="Screenshots/Expert_flow/5.jpg" alt="Expert Profile Management" width="300"/>
   
-  <img src="Screenshots/Expert_flow/5.jpg" alt="Expert Settings" width="300"/>
+  <img src="Screenshots/Expert_flow/4.jpg" alt="Expert Settings" width="300"/>
 </div>
 
 ## ✨ Features
