@@ -95,6 +95,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       final userEmail = AuthUtils().currentUserEmail;
       if (userEmail == null) throw Exception('User not logged in');
 
+      // Check if all required fields are filled
+      bool isComplete = _nameController.text.isNotEmpty && 
+                       _bioController.text.isNotEmpty && 
+                       _selectedExpertiseArea.isNotEmpty && 
+                       _selectedExperienceLevel.isNotEmpty &&
+                       _hourlyRateController.text.isNotEmpty;
+
       final expertData = {
         'name': _nameController.text,
         'bio': _bioController.text,
@@ -103,6 +110,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         'experienceLevel': _selectedExperienceLevel,
         'email': userEmail,
         'lastUpdated': FieldValue.serverTimestamp(),
+        'isProfileComplete': isComplete,
+        'reviewCount': 0, // Default values for new profiles
+        'rating': 0.0,
+        'expertise': [_selectedExpertiseArea], // Initialize with primary expertise
+        'completedSessions': 0,
       };
 
       // Find expert document by email
@@ -117,21 +129,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         docId = FirebaseFirestore.instance.collection('experts').doc().id;
         await FirebaseFirestore.instance.collection('experts').doc(docId).set(expertData);
       } else {
-        // Update existing expert document
+        // Update existing expert document while preserving existing data
         docId = querySnapshot.docs.first.id;
+        final existingData = querySnapshot.docs.first.data();
+        expertData['reviewCount'] = existingData['reviewCount'] ?? 0;
+        expertData['rating'] = existingData['rating'] ?? 0.0;
+        expertData['completedSessions'] = existingData['completedSessions'] ?? 0;
+        
         await FirebaseFirestore.instance.collection('experts').doc(docId).update(expertData);
       }
 
       if (!mounted) return;
       
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile saved successfully')),
+        const SnackBar(
+          content: Text('Profile saved successfully'),
+          backgroundColor: Colors.green,
+        ),
       );
       Navigator.pop(context);
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error saving profile: $e')),
+        SnackBar(
+          content: Text('Error saving profile: $e'),
+          backgroundColor: Colors.red,
+        ),
       );
     } finally {
       if (mounted) {

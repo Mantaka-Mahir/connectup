@@ -4,6 +4,7 @@ import '../models/session.dart';
 import '../utils/app_styles.dart';
 import '../utils/dummy_data.dart';
 import '../widgets/review_prompt_banner.dart';
+import 'video_call_screen.dart';
 
 class MySessionsScreen extends StatefulWidget {
   const MySessionsScreen({super.key});
@@ -359,11 +360,14 @@ class _MySessionsScreenState extends State<MySessionsScreen> with TickerProvider
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    // Logic to join the session
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Joining session... (Demo)'),
-                        duration: Duration(seconds: 1),
+                    // Navigate to video call screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VideoCallScreen(
+                          expert: session.expert,
+                          sessionTitle: 'Session with ${session.expert.name}',
+                        ),
                       ),
                     );
                   },

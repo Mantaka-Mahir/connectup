@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/app_styles.dart';
 import '../utils/auth_utils.dart';
-import 'experts_screen.dart';
-import 'user_type_selection_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});

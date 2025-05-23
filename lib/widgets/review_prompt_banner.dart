@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../utils/app_styles.dart';
 
 class ReviewPromptBanner extends StatelessWidget {
   final VoidCallback onReviewPressed;

@@ -5,6 +5,7 @@ import '../models/session.dart';
 import '../utils/app_styles.dart';
 import '../utils/auth_utils.dart';
 import '../utils/dummy_data.dart';
+import 'video_call_screen.dart';
 
 class ExpertDashboardScreen extends StatefulWidget {
   const ExpertDashboardScreen({super.key});
@@ -45,22 +46,30 @@ class _ExpertDashboardScreenState extends State<ExpertDashboardScreen> {
       double completeness = 0;
       
       void checkField(dynamic value, double weight) {
-        if (value != null && value.toString().isNotEmpty) {
-          completeness += weight;
+        if (value != null) {
+          if (value is String && value.isNotEmpty) {
+            completeness += weight;
+          } else if (value is List && value.isNotEmpty) {
+            completeness += weight;
+          } else if (value is num && value > 0) {
+            completeness += weight;
+          } else if (value is bool) {
+            completeness += weight;
+          }
         }
       }
 
-      // Check required fields with weights
-      checkField(expertData['name'], 20);
+      // Required fields with adjusted weights
+      checkField(expertData['name'], 15);
       checkField(expertData['bio'], 20);
       checkField(expertData['experienceLevel'], 15);
       checkField(expertData['hourlyRate'], 15);
       checkField(expertData['category'], 15);
-      checkField(expertData['expertise'], 15);
+      checkField(expertData['expertise'], 20);
 
       if (mounted) {
         setState(() {
-          profileCompleteness = completeness;
+          profileCompleteness = completeness.clamp(0, 100); // Ensure value is between 0 and 100
         });
       }
     } catch (e) {
@@ -655,13 +664,16 @@ class _ExpertDashboardScreenState extends State<ExpertDashboardScreen> {
                     ),
                   ),
                 ],
-              ),
-              ElevatedButton(
+              ),              ElevatedButton(
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Starting session... (Demo)'),
-                      duration: Duration(seconds: 1),
+                  // Navigate to the video call screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VideoCallScreen(
+                        expert: session.expert,
+                        sessionTitle: 'Session with ${session.expert.name}',
+                      ),
                     ),
                   );
                 },

@@ -37,38 +37,83 @@ class _ExpertsScreenState extends State<ExpertsScreen> {
       // Get experts from Firestore
       final QuerySnapshot expertSnapshot = await FirebaseFirestore.instance
           .collection('experts')
-          .orderBy('rating', descending: true)
           .get();
 
       final loadedExperts = expertSnapshot.docs.map((doc) {
-        final data = doc.data() as Map<String, dynamic>;        return Expert(
+        final data = doc.data() as Map<String, dynamic>;
+        return Expert(
           id: doc.id,
           name: data['name'] ?? '',
           email: data['email'] ?? '',
-          expertise: List<String>.from(data['expertise'] ?? []),
-          experienceLevel: data['experienceLevel'] ?? '',
-          category: data['category'] ?? '',
-          shortBio: data['bio'] ?? '',
-          hourlyRate: (data['hourlyRate'] ?? 0).toDouble(),          rating: (data['rating'] ?? 0).toDouble(),
-          reviewCount: data['reviewCount'] ?? 0,
-          profilePicture: data['profilePicture'] ?? '',
+          expertise: List<String>.from(data['expertise'] ?? [data['category'] ?? 'Software Development']),
+          experienceLevel: data['experienceLevel'] ?? 'Entry Level (1-2 years)',
+          category: data['category'] ?? 'Software Development',
+          shortBio: data['bio'] ?? 'This is our demo app built with flutter',
+          hourlyRate: (data['hourlyRate'] is num) ? (data['hourlyRate'] as num).toDouble() : 12.0,
+          rating: (data['rating'] is num) ? (data['rating'] as num).toDouble() : 0.0,
+          reviewCount: (data['reviewCount'] is num) ? (data['reviewCount'] as num).toInt() : 0,
+          profilePicture: data['profilePicture'] ?? 'assets/placeholder.png',
           isFeatured: data['isFeatured'] ?? false,
-          completedSessions: data['completedSessions'] ?? 0,
+          completedSessions: (data['completedSessions'] is num) ? (data['completedSessions'] as num).toInt() : 0,
+          isProfileComplete: data['isProfileComplete'] ?? true,
         );
       }).toList();
 
       if (mounted) {
         setState(() {
-          experts = loadedExperts;
+          // If no experts found, add dummy expert
+          if (loadedExperts.isEmpty) {
+            experts = [
+              Expert(
+                id: 'dummy1',
+                name: 'Akhlak Ud Jaman',
+                email: 'kamrul@gmail.com',
+                category: 'Software Development',
+                experienceLevel: 'Entry Level (1-2 years)',
+                hourlyRate: 12.0,
+                profilePicture: 'assets/placeholder.png',
+                rating: 0.0,
+                reviewCount: 0,
+                shortBio: 'This is our demo app built with flutter',
+                expertise: ['Software Development'],
+                isProfileComplete: true,
+                completedSessions: 0,
+              )
+            ];
+          } else {
+            experts = loadedExperts;
+          }
           _isLoading = false;
         });
       }
     } catch (e) {
       if (mounted) {
+        setState(() {
+          // On error, load dummy data
+          experts = [
+            Expert(
+              id: 'dummy1',
+              name: 'Akhlak Ud Jaman',
+              email: 'kamrul@gmail.com',
+              category: 'Software Development',
+              experienceLevel: 'Entry Level (1-2 years)',
+              hourlyRate: 12.0,
+              profilePicture: 'assets/placeholder.png',
+              rating: 0.0,
+              reviewCount: 0,
+              shortBio: 'This is our demo app built with flutter',
+              expertise: ['Software Development'],
+              isProfileComplete: true,
+              completedSessions: 0,
+            )
+          ];
+          _isLoading = false;
+        });
+
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error loading experts: $e'),
-            backgroundColor: Colors.red,
+          const SnackBar(
+            content: Text('Loading sample data'),
+            backgroundColor: Colors.orange,
           ),
         );
       }

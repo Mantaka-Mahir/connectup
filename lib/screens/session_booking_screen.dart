@@ -156,9 +156,9 @@ class _SessionBookingScreenState extends State<SessionBookingScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Month',
@@ -177,17 +177,16 @@ class _SessionBookingScreenState extends State<SessionBookingScreen> {
                 child: Row(
                   children: [
                     Text(
-                      'May 2025',
+                      '${_selectedDate.month}/${_selectedDate.year}',
                       style: GoogleFonts.poppins(
                         fontSize: 14,
-                        fontWeight: FontWeight.w500,
                         color: AppColors.text,
                       ),
                     ),
                     const SizedBox(width: 4),
                     Icon(
-                      Icons.keyboard_arrow_down,
-                      size: 18,
+                      Icons.calendar_today_outlined,
+                      size: 16,
                       color: AppColors.text,
                     ),
                   ],
@@ -230,19 +229,20 @@ class _SessionBookingScreenState extends State<SessionBookingScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        date.day.toString(),
+                        _getWeekdayShort(date.weekday),
                         style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: isSelected ? Colors.white : AppColors.text,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: isSelected ? Colors.white : Colors.grey.shade600,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        _getWeekdayShort(date.weekday),
+                        date.day.toString(),
                         style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          color: isSelected ? Colors.white : Colors.grey.shade600,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: isSelected ? Colors.white : AppColors.text,
                         ),
                       ),
                     ],
@@ -307,7 +307,7 @@ class _SessionBookingScreenState extends State<SessionBookingScreen> {
                         fontWeight: FontWeight.w500,
                         color: isSelected 
                           ? Colors.white 
-                          : (isAvailable ? AppColors.text : Colors.grey),
+                          : (isAvailable ? AppColors.text : Colors.grey.shade400),
                       ),
                     ),
                   ),
@@ -359,7 +359,7 @@ class _SessionBookingScreenState extends State<SessionBookingScreen> {
                   child: Column(
                     children: [
                       Text(
-                        '${duration}',
+                        '$duration',
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -370,7 +370,7 @@ class _SessionBookingScreenState extends State<SessionBookingScreen> {
                         'min',
                         style: GoogleFonts.poppins(
                           fontSize: 12,
-                          color: isSelected ? Colors.white.withOpacity(0.8) : Colors.grey.shade600,
+                          color: isSelected ? Colors.white : Colors.grey.shade600,
                         ),
                       ),
                     ],
@@ -522,26 +522,7 @@ class _SessionBookingScreenState extends State<SessionBookingScreen> {
       ),
     );
   }
-  
-  Widget _buildGenderOption(String gender) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      child: Text(
-        gender,
-        style: GoogleFonts.poppins(
-          fontSize: 14,
-          color: AppColors.text,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBottomBar() {
+    Widget _buildBottomBar() {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
